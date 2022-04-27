@@ -44,7 +44,8 @@
 ~~~ function homeHaldler(req, resp) {
 let move=newMovies(moveData.title, moveData.poster_path, moveData.overview);
 resp.send(move);
-} ~~~
+} 
+~~~
 
 
 ```function favoriteHaldler(request, response) { response.send('Welcome to Favorite Page');} ```
