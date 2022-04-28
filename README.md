@@ -1,10 +1,11 @@
 
-# Movies-Library - 1.0.0 
+# Movies-Library - 2.0.0 
 
 **Author Name**: Mohammad Azim
 
 ## WRRC
 [![WRRC](Screenshot.png)]
+[![WRRC](Screenshot2.png)]
 
 ## Overview
 
@@ -46,6 +47,39 @@
 
 ```function favoriteHaldler(request, response) { response.send('Welcome to Favorite Page');} ```
 
+
+8- getting data from third API  usning axios about moves and persons 
+
+9- there is four links  use the API two for ternding person and move  and the other two for searching 
+
+10- this code to get data form api and search on move name 
+~~~
+function searchMove(request, response) {
+
+    let nameew = request.query.name;
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${nameew}`;
+
+    axios.get(url).then((result) => {
+
+        let trendMove = result.data.results.map((ternd) => {
+            return new Trend(
+                ternd.id,
+                ternd.title,
+                ternd.release_date,
+                ternd.poster_path,
+                ternd.overview
+            );
+        });
+        response.send(trendMove);
+
+    }).catch((error => {
+        console.log(error);
+        response.send("error in getting data from API search")
+    }))
+}
+
+~~~
+
 ## Project Features
 
 this porject not finished yet 
@@ -53,3 +87,5 @@ this porject not finished yet
 
 
 just have two pages home with the move Data and the second page have welcoming message
+
+now i add the api requests for search and get trend moves and persons
