@@ -9,7 +9,7 @@ const moveData = require('./Movies-data/data.json');
 const { default: axios } = require('axios');
 require("dotenv").config();
 
-let apiKey = process.env.API_KEY;
+let apiKey = "3368b429ebd3bb64615918d802e86b65";
 
 app.use(cors());
 
