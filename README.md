@@ -1,11 +1,18 @@
 
-# Movies-Library - 2.0.0 
+# Movies-Library - 3.0.0 
 
 **Author Name**: Mohammad Azim
 
 ## WRRC
 [![WRRC](Screenshot.png)]
+
+
 [![WRRC](Screenshot2.png)]
+
+
+[![WRRC](Screenshot3.png)]
+
+
 
 ## Overview
 
@@ -89,3 +96,5 @@ this porject not finished yet
 just have two pages home with the move Data and the second page have welcoming message
 
 now i add the api requests for search and get trend moves and persons
+
+today make a database with postgres  can add move data now and get it from the data base
