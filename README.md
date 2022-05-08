@@ -49,7 +49,11 @@
 
 7- handle the responce for each rout 
 
-``` function homeHaldler(req, resp) {let move=newMovies(moveData.title, moveData.poster_path, moveData.overview);resp.send(move);} ```
+~~~ function homeHaldler(req, resp) {
+let move=newMovies(moveData.title, moveData.poster_path, moveData.overview);
+resp.send(move);
+} 
+~~~
 
 
 ```function favoriteHaldler(request, response) { response.send('Welcome to Favorite Page');} ```
@@ -98,3 +102,4 @@ just have two pages home with the move Data and the second page have welcoming m
 now i add the api requests for search and get trend moves and persons
 
 today make a database with postgres  can add move data now and get it from the data base
+
