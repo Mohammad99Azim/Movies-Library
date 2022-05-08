@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const {get, send } = require('express/lib/response');
+
 const cors = require('cors')
 const app = express();
 const port = 3000;
@@ -9,16 +9,26 @@ const moveData = require('./Movies-data/data.json');
 const { default: axios } = require('axios');
 require("dotenv").config();
 
-// let apiKey = process.env.API_KEY;
 
-let apiKey = "3368b429ebd3bb64615918d802e86b65";
+let db_url = "postgres://mohammad:123456789@localhost:5432/moves";
+
+const bodyParser = require('body-parser');
+
+
+
+
+let apiKey = process.env.API_KEY;
+
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const { Client } = require('pg');
+const client = new Client(db_url);
 
 
-app.listen(port, () => {
-    console.log('we know listen to the app form port 3000');
-})
+
 
 
 app.get('/', homeHanldler);
@@ -37,6 +47,45 @@ app.get('/person', personHandler);
 app.get('/personsearch', searchPerson);
 // to search on person : http://localhost:3000/personsearch?personname=n
 
+app.post('/addMovie', addMovieHandler);
+// to add Movie : http://localhost:3000/addMovie
+
+
+app.get('/getMovies', getMoviesHandler);
+
+
+function addMovieHandler(req, res) {
+
+    let { id, title, releasedate, posterpath } = req.body;
+
+    let sql = 'INSERT INTO themove (id,title, releasedate ,posterpath) VALUES ($1, $2, $3, $4) RETURNING * ;';
+    let values = [id, title, releasedate, posterpath];
+
+    client.query(sql, values).then((result) => {
+        console.log(result);
+        return res.status(201).json(result.rows);
+    }).catch((err) => {
+        handleError(err, req, res);
+    });
+
+}
+
+function getMoviesHandler(request, response) {
+    let sql = `SELECT * FROM themove ;`;
+    client.query(sql).then((result) => {
+        console.log(result);
+        response.json(result.rows);
+    }).catch((err) => {
+        handleError(err, request, response);
+    })
+
+}
+
+client.connect().then(() => {
+    app.listen(port, () => {
+        console.log('we know listen to the app form port 3000');
+    });
+})
 
 function trendingHandler(request, response) {
 
@@ -55,7 +104,6 @@ function trendingHandler(request, response) {
                 );
             });
             response.send(trendMove);
-
         })
         .catch((error => {
             console.log(error);
@@ -182,17 +230,8 @@ function favoriteHanldler(request, response) {
 }
 
 
-app.use((req, res, next) => {
-    res.status(404).send({
-        "status": 404,
-        "responseText": "Sorry, Not found page 404"
-    })
-})
 
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).send({
-        "status": 500,
-        "responseText": "Sorry, something went wrong"
-    })
-})
+function handleError(error, req, res) {
+    res.status(500).send(error)
+}
+
