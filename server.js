@@ -52,14 +52,55 @@ app.post('/addMovie', addMovieHandler);
 
 
 app.get('/getMovies', getMoviesHandler);
+// to get Movies : http://localhost:3000/getMovies
+
+app.put('/UPDATE/:id', updatingHandller);
+// to update Movie : http://localhost:3000/UPDATE/4
+
+app.delete('/DELETE/:id', deletHandller);
+// to delete Movie : http://localhost:3000/DELETE/3
+
+app.get('/getMovie/:id', findMoveHandller);
+// to find one Movie : http://localhost:3000/getMovie/4
+
+
+function findMoveHandller(req, res) {
+    let id = req.params.id;
+    let sql = `SELECT * FROM themove WHERE ID = ${id}`
+
+    client.query(sql).then((result) => {
+        res.json(result.rows);
+    })
+}
+
+function deletHandller(req, res) {
+    let id = req.params.id;
+    let sql = `DELETE FROM themove WHERE ID = ${id} RETURNING *`;
+    client.query(sql).then((result) => {
+        res.send(`recorde Deleted`)
+    })
+}
+
+function updatingHandller(req, res) {
+    let id = req.params.id;
+    let { title, releasedate, posterpath } = req.body;
+    let sql = `UPDATE themove SET title = $1, releasedate = $2, posterpath=$3 WHERE ID = ${id} RETURNING *`;
+    let values = [title, releasedate, posterpath];
+
+    client.query(sql, values).then((result) => {
+        console.log(result.rows[0]);
+        return res.json(result.rows[0]);
+    });
+}
+
 
 
 function addMovieHandler(req, res) {
 
-    let { id, title, releasedate, posterpath } = req.body;
+    let { title, releasedate, posterpath } = req.body;
 
-    let sql = 'INSERT INTO themove (id,title, releasedate ,posterpath) VALUES ($1, $2, $3, $4) RETURNING * ;';
-    let values = [id, title, releasedate, posterpath];
+    let sql = 'INSERT INTO themove (title, releasedate ,posterpath) VALUES ($1, $2, $3) RETURNING * ;';
+    let values = [title, releasedate, posterpath];
 
     client.query(sql, values).then((result) => {
         console.log(result);

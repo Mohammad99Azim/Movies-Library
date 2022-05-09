@@ -1,5 +1,5 @@
 
-# Movies-Library - 3.0.0 
+# Movies-Library - 4.0.0 
 
 **Author Name**: Mohammad Azim
 
@@ -11,6 +11,9 @@
 
 
 [![WRRC](Screenshot3.png)]
+
+
+[![WRRC](Screenshot4.png)]
 
 
 
@@ -102,4 +105,7 @@ just have two pages home with the move Data and the second page have welcoming m
 now i add the api requests for search and get trend moves and persons
 
 today make a database with postgres  can add move data now and get it from the data base
+
+in task 14 add three url's the first to update move info  scound one for delete specific movie 
+and last one for get info for one specific movie
 
