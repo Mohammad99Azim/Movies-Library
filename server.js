@@ -9,6 +9,7 @@ const moveData = require('./Movies-data/data.json');
 const { default: axios } = require('axios');
 require("dotenv").config();
 
+
 let db_url = "postgres://mohammad:123456789@localhost:5432/moves";
 
 const bodyParser = require('body-parser');
@@ -17,6 +18,7 @@ const bodyParser = require('body-parser');
 
 
 let apiKey = process.env.API_KEY;
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -269,6 +271,8 @@ function favoriteHanldler(request, response) {
 }
 
 
+
 function handleError(error, req, res) {
     res.status(500).send(error)
 }
+

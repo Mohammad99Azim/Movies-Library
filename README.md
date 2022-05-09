@@ -52,7 +52,11 @@
 
 7- handle the responce for each rout 
 
-``` function homeHaldler(req, resp) {let move=newMovies(moveData.title, moveData.poster_path, moveData.overview);resp.send(move);} ```
+~~~ function homeHaldler(req, resp) {
+let move=newMovies(moveData.title, moveData.poster_path, moveData.overview);
+resp.send(move);
+} 
+~~~
 
 
 ```function favoriteHaldler(request, response) { response.send('Welcome to Favorite Page');} ```
@@ -104,3 +108,4 @@ today make a database with postgres  can add move data now and get it from the d
 
 in task 14 add three url's the first to update move info  scound one for delete specific movie 
 and last one for get info for one specific movie
+
