@@ -4,32 +4,28 @@ const express = require('express');
 
 const cors = require('cors')
 const app = express();
-const port = 3000;
-const moveData = require('./Movies-data/data.json');
-const { default: axios } = require('axios');
 require("dotenv").config();
 
+const port = process.env.PORT || 3001;
+const apiKey = process.env.API_KEY;
 
-let db_url = "postgres://mohammad:123456789@localhost:5432/moves";
+const moveData = require('./Movies-data/data.json');
+const { default: axios } = require('axios');
 
 const bodyParser = require('body-parser');
-
-
-
-
-let apiKey = process.env.API_KEY;
-
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const { Client } = require('pg');
-const client = new Client(db_url);
-
-
-
-
+//const client = new Client(process.env.DATABASE_URL);
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+})
 
 app.get('/', homeHanldler);
 app.get('/favorite', favoriteHanldler);
@@ -275,4 +271,3 @@ function favoriteHanldler(request, response) {
 function handleError(error, req, res) {
     res.status(500).send(error)
 }
-
