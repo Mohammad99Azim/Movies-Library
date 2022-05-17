@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const { Client } = require('pg');
-// const client = new Client(process.env.DATABASE_URL);
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
-})
+const client = new Client(process.env.DATABASE_URL);
+// const client = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: {
+//         rejectUnauthorized: false
+//     }
+// })
 
 app.get('/', homeHanldler);
 app.get('/favorite', favoriteHanldler);
@@ -93,10 +93,10 @@ function updatingHandller(req, res) {
 
 function addMovieHandler(req, res) {
 
-    let { title, releasedate, posterpath } = req.body;
+    let { title, releasedate, posterpath,comment } = req.body;
 
-    let sql = 'INSERT INTO themove (title, releasedate ,posterpath) VALUES ($1, $2, $3) RETURNING * ;';
-    let values = [title, releasedate, posterpath];
+    let sql = 'INSERT INTO themove (title, releasedate ,posterpath,comment) VALUES ($1, $2, $3,$4) RETURNING * ;';
+    let values = [title, releasedate, posterpath,comment];
 
     client.query(sql, values).then((result) => {
         console.log(result);
